@@ -1,4 +1,4 @@
-package myMath;
+package Ex1;
 
 //import java.util.ArrayList;
 
@@ -7,8 +7,6 @@ import java.util.LinkedList;
 import java.util.function.Predicate;
 
 import javax.crypto.EncryptedPrivateKeyInfo;
-
-import myMath.Monom;
 /**
  * This class represents a Polynom with add, multiply functionality, it also should support the following:
  * 1. Riemann's Integral: https://en.wikipedia.org/wiki/Riemann_integral
@@ -200,11 +198,16 @@ public class Polynom implements Polynom_able{
 	 */
 
 	@Override
-	public boolean equals(Polynom_able p1) {
-		String y = this.toString();
-		Polynom x = new Polynom (y);
-		x.substract(p1);
-		if(x.isZero()) return true;
+	public boolean equals(Object p1) {
+		
+			String a = p1.toString();
+			Polynom_able z = new Polynom(a);
+			String y = this.toString();
+			Polynom x = new Polynom (y);
+			x.substract(z);
+			if(x.isZero()) return true;
+		
+			
 		
 		return false;
 		
@@ -323,6 +326,11 @@ public class Polynom implements Polynom_able{
 		
 		
 	}
+	
+	public function initFromString(String s) {
+		Polynom n = new Polynom(s);
+		return n;
+	}
 	/**
 	 * This method determines is a string is valid
 	 * @param s is the string that is being checked
@@ -345,14 +353,11 @@ public class Polynom implements Polynom_able{
 	}
 	
 	public static void main(String[] args) {
-		Polynom x = new Polynom("5x");
-		Polynom y = new Polynom("5x+3");
-		x.add(y);
-		System.out.println(y);
-		System.out.println(x);
-	//	x.multiply(y);
-	//	System.out.println(x);
-	//	System.out.println(y);
+		
+		Polynom a0 = new Polynom("x^2-4");
+		//System.out.println(a0.f(-5)*a0.f(5));
+		System.out.println(a0.root(1,4, 0.001));
+		
 		
 
 	}

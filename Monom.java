@@ -1,5 +1,5 @@
 
-package myMath;
+package Ex1;
 
 import java.util.Comparator;
 
@@ -215,6 +215,17 @@ public class Monom implements function{
 		}
 		else return false;
 	
+	}
+	
+	public function copy() {
+		String z = this.toString();
+		Monom x = new Monom(z);
+		return x;
+	}
+	
+	public function initFromString(String s) {
+		function n = new Monom(s);
+		return n;
 	}
 		
 	// you may (always) add other methods.

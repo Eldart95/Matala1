@@ -1,4 +1,5 @@
-package myMath;
+package Ex1;
+
 /**
  * This class represents a simple (naive) tester for the Polynom class, 
  * Note:                                              <br>
