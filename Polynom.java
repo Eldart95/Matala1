@@ -32,7 +32,7 @@ public class Polynom implements Polynom_able{
 	 */
 	LinkedList<Monom> monoms = new LinkedList<Monom>();
 	public Polynom(String s) {
-		polynomCheck(s);
+		//polynomCheck(s);
 		boolean isMinus = false;
 		int count = 0;
 		for (int i = 0; i < s.length(); i++) {
@@ -328,14 +328,14 @@ public class Polynom implements Polynom_able{
 	}
 	
 	public function initFromString(String s) {
-		Polynom n = new Polynom(s);
+		function n = new Polynom(s);
 		return n;
 	}
 	/**
 	 * This method determines is a string is valid
 	 * @param s is the string that is being checked
 	 */
-	private void polynomCheck(String s) {
+	public void polynomCheck(String s) {
 		s=s.toLowerCase();
 		if(s=="") {
 			throw new RuntimeException("Empty String Received");

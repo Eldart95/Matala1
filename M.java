@@ -3,13 +3,15 @@ package Ex1;
 public class M {
 
 	public static void main(String[] args) {
-		String a = "(2x^3,3x)";
-		ComplexFunction x= new ComplexFunction(a);
-		//System.out.println(a.substring(1, a.length()-1));
-		System.out.println(x);
+		String k = "Plus(Plus(3x,3x),Plus(3x,83x))";
+		ComplexFunction f = new ComplexFunction();
 
+		f.initFromString(k);
+		System.out.println(f);
+		
 		
 	
+
 		
 		
 

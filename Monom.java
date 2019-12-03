@@ -207,9 +207,12 @@ public class Monom implements function{
 	 * @param x
 	 * @return true if the Monoms are the same, false otherwise.
 	 */
-	public boolean equals(Monom x) {
+	public boolean equals(Object obj) {
+		//use iterator
+		// if obj instance of monom
+		
 		String temp1 = this.toString();
-		String temp2 = x.toString();
+		String temp2 = obj.toString();
 		if(temp1.equals(temp2)) {
 			return true;
 		}
