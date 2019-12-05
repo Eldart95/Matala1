@@ -225,7 +225,7 @@ public class Monom implements function{
 		Monom x = new Monom(z);
 		return x;
 	}
-	
+	@Override
 	public function initFromString(String s) {
 		function n = new Monom(s);
 		return n;

@@ -3,153 +3,55 @@ package Ex1;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/**
+ * The class ComplexFunction represents a ComplexFunction of the shape : g(f1(x), f2(x)).
+ * g is an operation : plus,minus,divide,multiply,composite,max and min
+ * f1,f2 are function of the type Polynom or ComplexFunction
+ * f1 is the left function and f2 is the right function
+ * 
+ * @author Eldar
+ */
+
 public class ComplexFunction implements complex_function {
 	public Operation Sign;
 	public function left,right;
 
-	LinkedList<Object> func = new LinkedList<Object>();
-	//g(f1(x), f2(x))
+	LinkedList<ComplexFunction> func = new LinkedList<ComplexFunction>();
+	
+	//////////////////Constructors///////////////////
+	
 	public ComplexFunction() {
-	
-		
-		/*
-		 *binary tree, left and right
-		 *init major function in recursion
-		 *ops are making this.func the left of bigger complex function and the new one its right. 
-		 *checks are instanceof monom,polynom or null 
-		 *check if op is an enum with switch case
-		 *
-		 */
-		
-		
+
 	}
-	
-	
-	
-	public ComplexFunction(Operation sign2, function left2, function right2) {
-		this.Sign=sign2;
-		this.left=left2;
-		this.right=right2;
+	public ComplexFunction (function left) {
+		this.left = left;
+		this.right= null;
+		this.Sign = Operation.None;
 	}
 
-
+	public ComplexFunction(String s, function left, function right) {
+		this.left=left;
+		this.right=right;
+		String a = s.toLowerCase();
+		switch(a) {
+		case "plus": this.Sign=Operation.Plus; break;
+		case "min": this.Sign=Operation.Min; break;
+		case "max": this.Sign=Operation.Max; break;
+		case "comp": this.Sign=Operation.Comp; break;
+		case "divid": this.Sign=Operation.Divid; break;
+		case "mul": this.Sign=Operation.Times; break;
+		default: this.Sign=Operation.None;
+		}
+	}
+	//////////////////Getters///////////////////
 
 	public Operation getOp() {
 		return this.Sign;
 	}
 	
-	public double f(double x) {
-		return 0;
-		
-	}
-	public function initFromString(String s) { //"g(f1,f2)
-		//use recusrion to slice the string to polynoms monoms and nulls
-		if(s.charAt(0)>=48 && s.charAt(0)<=57) {
-			function f = new Polynom(s);
-		//	func.add(f);
-			return f;
-			
-		}
-		//(Plus(3x,3x),2x)
-		int j = 0;
-		while(s.charAt(j)!='(') {
-			j++;
-		}
-		String temp = s.substring(0,j);
-		
-		switch(temp) {
-		case "":
-			this.Sign=Operation.None;
-			int c1=0;
-			int c2=0;
-			for (int i = 0; i < s.length(); i++) {
-				if(s.charAt(i)=='(') c1++;
-				if(s.charAt(i)==')') c1--;
-				if(s.charAt(i)==',' && c1==1) {
-					c2=i;
-				}
-			}
-			
-			String l = s.substring(1,c2);
-			String r = s.substring(c2+1,s.length()-1);
-
-			function left = this.initFromString(l);
-			function right = this.initFromString(r);
-			this.left=left;
-			this.right=right;
-			function cf = new ComplexFunction(Sign,left,right);
-			func.add(cf);
-			break;
-		
-		case "Plus":
-			this.Sign=Operation.Plus;
-			//s=(2x-3,4x+2) // temp = ""
-			int q1=0;
-			int q2=0;
-			for (int i = 0; i < s.length(); i++) {
-				if(s.charAt(i)=='(') q1++;
-				if(s.charAt(i)==')') q1--;
-				if(s.charAt(i)==',' && q1==1) {
-					q2=i;
-				}
-			}
-			
-			String l1 = s.substring(5,q2);
-			String r1 = s.substring(q2+1,s.length()-1);
-
-			function left1 = this.initFromString(l1);
-			function right1 = this.initFromString(r1);
-			
-			this.left=left1;
-			this.right=right1;
-			ComplexFunction cf1 = new ComplexFunction(Sign,left1,right1);
-			func.add(cf1);
-			break;
-		}
-		
-		
-		return null;
-	}
-	public function copy() {
-		String a = this.toString();
-		function x = new ComplexFunction();
-		return x;
-	}
-	public boolean equals(Object obj) {
-		//use equals from monom and polynom
-	return false;
-	}
-	
-	
-	
-	
-	
-	public void plus(function f1) {
-			
-		if(f1 instanceof Polynom) {
-			
-		}
-		
-	}
-	
-	public void mul(function f1) {
-		String temp = this.toString();
-		String temp2 = f1.toString();
-		Polynom x = new Polynom (temp);
-		Polynom y = new Polynom (temp2);
-		x.multiply(y);
-	}
-	
-	public void div (function f1) {
-		
-		
-		
-	}
-	
 	public function left() {
 		if(this.left!=null) return this.left;
 		 
-		
 		return null;
 	}
 	public function right() {
@@ -158,52 +60,234 @@ public class ComplexFunction implements complex_function {
 		return null;
 	}
 	
-	public String toString() {
-		if(this.Sign==Operation.Error) return "";
-		String ans ="";
-		 ans+=this.Sign+"(";
-		Iterator<Object> it = this.iteretor();
-		while(it.hasNext()) {		
-		    Object nextItem = it.next();
-		   
-		    if(nextItem instanceof Polynom) {
-		    	ans+=nextItem;
-		    	ans+=',';
-		    	
-		    }
-		    if(nextItem instanceof ComplexFunction) {
-		    	if(((ComplexFunction) nextItem).left==null && ((ComplexFunction) nextItem).right==null) {
-		    		ans+="";
-		    	}
-		    	else { ans+=((ComplexFunction) nextItem).getOp();
-		    	ans+='(';
-		    	}
-		    	if(((ComplexFunction) nextItem).left==null) {
-		    		ans+="";
-		    	}
-		    	else 	ans+=((ComplexFunction) nextItem).left+",";
-		    	
-		    	if(((ComplexFunction) nextItem).right==null) {
-		    		ans+="";
-		    	}
-		    	else {	ans+=((ComplexFunction) nextItem).right;
-		    	ans+=')';
-		    	}
-		    }
-		 
+	//////////////////Methods///////////////////
+	
+	public double f(double x) {
+		switch(this.Sign) {
+		case Plus: return this.left.f(x)+this.right.f(x);
+		case Times: return this.left.f(x)*this.right.f(x);
+		case Divid:
+			if(this.right.f(x)!=0) {
+			return this.left.f(x)/this.right.f(x);
+			}
+			else throw new RuntimeException("Cant divide by 0");
+		case Min:
+			if(this.right.f(x)>=this.left.f(x)) return this.left.f(x);
+			return this.right.f(x);
+		case Max:
+			if(this.right.f(x)<=this.left.f(x)) return this.left.f(x);
+			return this.right.f(x);
+		case Comp:
+			if (this.right != null ) {
+				return this.left.f(this.right.f(x));
+			}
+			return this.left.f(x);
+		case None:
+		case Error:	throw new RuntimeException("An error occured");
 		}
 		
-		return ans+=')';
+		return 0;
+			
+			
+			
+		}
 		
 	}
+	public function initFromString(String s) { 
+		if(!s.contains("(") && !s.contains(")")) {
+			function p = new Polynom(s);
+			ComplexFunction a = new ComplexFunction(p);
+			
+			return a;
+			
+		}
+		
+		else {
+		int j = 0;
+		while(s.charAt(j)!='(') {
+			j++;
+		}
+		String temp1 = s.substring(0,j);
+		int w = split(s);
+		String a = s.substring(j+1,w);                      //Cuts the string into two pieces
+		function f1 = initFromString(a);                    //that will later become the left
+		String b = s.substring(w+1,s.length()-1);           //and the right of a ComplexFunction.
+		function f2 = initFromString(b);
+		
+		String temp = temp1.toLowerCase();
+		switch(temp) {
+		case "plus": this.Sign=Operation.Plus; break;
+		case "min": this.Sign=Operation.Min; break;
+		case "max": this.Sign=Operation.Max; break;
+		case "comp": this.Sign=Operation.Comp; break;
+		case "divid": this.Sign=Operation.Divid; break;
+		case "mul": this.Sign=Operation.Times; break;
+		default: this.Sign=Operation.None;
+		}
+		ComplexFunction f16=new ComplexFunction(temp,f1,f2);
+		System.out.println(f16.toString());
 
-
-
-	public Iterator<Object> iteretor() {
-		return func.iterator();
+		return f16;
+		
+		}
+		
 	}
 	
+	/**
+	 * 
+	 * The helper of the init method, cuts the string.
+	 */
+	private int split(String s) {
+		int q1=0,q2=0;
+		for (int i = 0; i < s.length(); i++) {
+			if(s.charAt(i)=='(') q1++;
+			if(s.charAt(i)==')') q1--;
+			if(s.charAt(i)==',' && q1==1) {
+				q2=i;
+			}
+		}
+		return q2;
+	}
+	
+	/**
+	 * returns a deep copy of a function
+	 */
+
+	public function copy() {
+		
+		function f35 = new ComplexFunction(this.Sign.toString(),this.left,this.right);
+		return f35;
+	}
+	public boolean equals(Object obj) {
+		//use equals from monom and polynom
+	return false;
+	}
+	
+	
+	/**
+	 * manipulates the function and adds another function to it
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	
+	
+	public void plus(function f1) {
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Plus;
+		
+	}
+	/**
+	 * manipulates the function and multiplys another function 
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	
+	public void mul(function f1) {
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Times;
+		
+	}
+	
+	/**
+	 * manipulates the function and divides another function 
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	public void div (function f1) {
+		
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Divid;
+		
+	}
+	/**
+	 * Makes a string out of a complexfunction
+	 */
 
 	
-
+	public String toString() {
+		String ans="";
+		if(this.Sign==Operation.None) {
+		ans+="";
+		}
+		else ans+=this.Sign+"(";
+		
+		
+	
+		if(this.left!=null) {
+			ans+=this.left;	
+		}
+		if(this.right!=null) {
+			ans+=",";
+			ans+=this.right;
+			ans+=")";
+			}
+		
+		return ans;
+	}
+		
+	public Iterator<ComplexFunction> iteretor() {
+		return func.iterator();
+	}
+	@Override
+	/**
+	 * manipulates the function and calculates the max 
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	public void max(function f1) {
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Max;
+	}
+	@Override
+	/**
+	 * manipulates the function and calculates the min 
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	public void min(function f1) {
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Min;
+		
+	}
+	@Override
+	/**
+	 * manipulates the function and comps one on another
+	 * if there is right function than this function turns into complexfunction
+	 * if there isnt than the new function becomes the right one
+	 */
+	public void comp(function f1) {
+		if(this.right!=null) {
+			function new_f = new ComplexFunction(this.Sign.toString(), this.left,this.right);
+			this.left=new_f;
+		}
+		
+		this.right=f1;
+		this.Sign=Operation.Comp;
+		
+	}
 }
