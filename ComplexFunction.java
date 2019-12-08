@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * The class ComplexFunction represents a ComplexFunction of the shape : g(f1(x), f2(x)).
- * g is an operation : plus,minus,divide,multiply,composite,max and min
+ * g is an operation : plus,divide,multiply,composite,max and min
  * f1,f2 are function of the type Polynom or ComplexFunction
  * f1 is the left function and f2 is the right function
  * 
@@ -19,6 +19,14 @@ public class ComplexFunction implements complex_function {
 	LinkedList<ComplexFunction> func = new LinkedList<ComplexFunction>();
 	
 	//////////////////Constructors///////////////////
+	
+	public ComplexFunction(String s) {
+		ComplexFunction x = (ComplexFunction) this.initFromString(s);
+		this.Sign=x.Sign;
+		this.left=x.left;
+		this.right=x.right;
+		
+	}
 	
 	public ComplexFunction() {
 
@@ -91,20 +99,24 @@ public class ComplexFunction implements complex_function {
 			
 			
 		}
+	
+	/**
+	 * Takes a string and build an ComplexFunction out of it
+	 */
 		
-	}
+	
 	public function initFromString(String s) { 
 		if(!s.contains("(") && !s.contains(")")) {
 			function p = new Polynom(s);
-			ComplexFunction a = new ComplexFunction(p);
 			
-			return a;
+			
+			return p;
 			
 		}
 		
 		else {
-		int j = 0;
-		while(s.charAt(j)!='(') {
+			int j = 0;
+			while(s.charAt(j)!='(') {
 			j++;
 		}
 		String temp1 = s.substring(0,j);
@@ -125,7 +137,7 @@ public class ComplexFunction implements complex_function {
 		default: this.Sign=Operation.None;
 		}
 		ComplexFunction f16=new ComplexFunction(temp,f1,f2);
-		System.out.println(f16.toString());
+		
 
 		return f16;
 		
@@ -158,8 +170,39 @@ public class ComplexFunction implements complex_function {
 		function f35 = new ComplexFunction(this.Sign.toString(),this.left,this.right);
 		return f35;
 	}
+	/**
+	 * Compare between objects, will work only under certain condition- both objects are 
+	 * ComplexFunctions.
+	 * otherwise wont work.
+	 * returns true if two functions are logically equal
+	 * 
+	 */
 	public boolean equals(Object obj) {
-		//use equals from monom and polynom
+		boolean ans = false;
+		if(this instanceof ComplexFunction && obj instanceof ComplexFunction) {
+			int a = (int)(Math.random()+1)*100;
+			int b = (int)(Math.random()+1)*150;
+			int c = (int)(Math.random()+1)*200;
+			int d = (int)(Math.random()+1)*300;
+			
+			
+			if(((ComplexFunction)this).f(a)==((ComplexFunction)obj).f(a)) {
+					ans=true;
+			}
+			if(((ComplexFunction)this).f(b)==((ComplexFunction)obj).f(b)) {
+				ans=true;
+		}
+			if(((ComplexFunction)this).f(c)==((ComplexFunction)obj).f(c)) {
+				ans=true;
+		}
+			if(((ComplexFunction)this).f(d)==((ComplexFunction)obj).f(d)) {
+				ans=true;
+		}
+			return ans;
+			
+		}
+		
+		
 	return false;
 	}
 	
