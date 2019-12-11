@@ -1,38 +1,21 @@
 package Ex1;
 
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.util.Iterator;
+
 import javax.swing.plaf.synth.SynthDesktopIconUI;
 
 public class M {
 
-	public static void main(String[] args) {
-		
-		ComplexFunction we = new ComplexFunction("Plus(3x,3x)");
-		Functions_GUI qq = new Functions_GUI();
-		Range x = new Range(0,5);
-		Range y = new Range(0,5);
-		qq.drawFunctions(1050, 1050, x, y, 60);
+	public static void main(String[] args) throws IOException {
+		ComplexFunction t = new ComplexFunction();
+		String xa = "max(2.0,plus(3.0x,2.0x))";
 	
+		ComplexFunction a = new ComplexFunction(xa);
+		System.out.println(a);
 
-		function e = new Polynom("4x^2");
-		function f = new Polynom("2x+5x^3+15");
-		ComplexFunction f4 = new ComplexFunction("divid",e,f);	
-		
-		function g = new Polynom("x");
-		function h = new Polynom("x");
-		
-		ComplexFunction f5 = new ComplexFunction("mul",g,h);
-		
-		
-	//	System.out.println(x);
-		System.out.println("***");
-//		System.out.println(k);
-		System.out.println("***");
-//		System.out.println(f3);
-//		System.out.println("***");
-//		System.out.println(f4.f(5));
-		
-		
-		
 		
 	
 

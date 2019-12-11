@@ -116,5 +116,16 @@ class PolynomJTest {
 		assertEquals(x4.area(0,5,0.001),2039.2265148409338);
 		
 	}
+	
+	@Test
+	void rootTest() {
+		Polynom x = new Polynom("x^2-4");
+		Polynom y = new Polynom("x^2-16");
+		Polynom z = new Polynom("0");
+		
+		assertEquals(x.root(0, 5, 0.01),2.0000000000000013);
+		assertEquals(y.root(0, 5, 0.01),3.9999999999999587);
+		assertEquals(z.root(0, 5, 0.01),0);
+	}
 
 }

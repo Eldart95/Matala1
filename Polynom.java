@@ -31,7 +31,8 @@ public class Polynom implements Polynom_able{
 	 * @param s: is a string representing a Polynom
 	 */
 	LinkedList<Monom> monoms = new LinkedList<Monom>();
-	public Polynom(String s) {
+	public Polynom(String ns) {
+		String s = clearSpaces(ns);
 		//polynomCheck(s);
 		boolean isMinus = false;
 		int count = 0;
@@ -242,8 +243,8 @@ public class Polynom implements Polynom_able{
 		if(this.f(x0)*this.f(x1)>0) throw new RuntimeException("no root");
 		double from = x0;
 		double to = x1;
-		while(this.f(from)<=this.f(to)) {
-			if(this.f(from)==0 && Math.abs(this.f(from))<eps) {
+		while(this.f(from)<this.f(to)) {
+			if(this.f(from)==0 || Math.abs(this.f(from))<eps) {
 				return from;
 				
 			}
@@ -354,9 +355,9 @@ public class Polynom implements Polynom_able{
 	
 	public static void main(String[] args) {
 		
-		Polynom a0 = new Polynom("x^2-4");
+		Polynom a0 = new Polynom("x^2-16");
 		//System.out.println(a0.f(-5)*a0.f(5));
-		System.out.println(a0.root(1,4, 0.001));
+		System.out.println(a0.root(0,4, 0.01));
 		
 		
 
@@ -398,6 +399,16 @@ public class Polynom implements Polynom_able{
 		
 
 		return ans;
+	}
+	public String clearSpaces (String s) {
+		String t="";
+		for (int i=0; i<s.length(); i++) {
+			if (s.charAt(i)==' ') {
+				continue;
+				}
+			t=""+t+s.charAt(i);
+		}
+		return t;
 	}
 
 }

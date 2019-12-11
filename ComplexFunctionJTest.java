@@ -38,12 +38,23 @@ class ComplexFunctionJTest {
 		function f5 = new ComplexFunction("DIVID",f3,f4);
 		assertEquals(f5.toString(),"Divid(Times(2.0x,5.0x^3+4.0x^2+4.0x),Comp(4.0x^3+5.0x^2-2.0x,-4.0x^2+2.0x))");
 		
+		
+		ComplexFunction f6 = new ComplexFunction("Plus(3x,3x)");
+		ComplexFunction f7 = new ComplexFunction("divid(3x^2,3x-2)");
+		ComplexFunction f8 = new ComplexFunction(Operation.Max,f1,f2);
+		ComplexFunction f9 = new ComplexFunction(Operation.Min,f3,f1);
+		
+		assertEquals(f6.toString(),"Plus(3.0x,3.0x)");
+		assertEquals(f7.toString(),"Divid(3.0x^2,3.0x-2.0)");
+		assertEquals(f8.toString(),"Max(Plus(3.0x,3.0x),Divid(3.0x^2,3.0x-2.0))");
+		assertEquals(f9.toString(),"Min(Max(Plus(3.0x,3.0x),Divid(3.0x^2,3.0x-2.0)),Plus(3.0x,3.0x))");
+		
 	}
 	/**
 	 * test for all arithmetic methods, the methods implemented in exactly the same way
 	 * if one works than all are.
 	 */
-	//@Test
+//	@Test
 	void operationTest() {
 		function a = new Polynom("3x");
 		function b = new Polynom("2x");
@@ -63,7 +74,7 @@ class ComplexFunctionJTest {
 		assertEquals(f3.toString(),"Divid(12.0x^2,12.0x^2)");
 	}
 	
-	@Test
+//	@Test
 	void fxTest() {
 		function a = new Polynom("3x");
 		function b = new Polynom("2x");
@@ -85,4 +96,38 @@ class ComplexFunctionJTest {
 		
 		
 	}
+//	@Test
+	void equalsTest() {
+		function a = new Polynom("3x+2");
+		function b = new Polynom("4x^2");
+		ComplexFunction f1 = new ComplexFunction(Operation.Plus,a,b);
+		
+		function c = new Polynom("4x^2");
+		function d = new Polynom("3x+2");
+		ComplexFunction f2 = new ComplexFunction(Operation.Plus,c,d);
+		
+		assertEquals(f1.equals(f2),true);
+		
+		function e = new Polynom("x");
+		function f = new Polynom("x");
+		ComplexFunction f3 = new ComplexFunction(Operation.Times,e,f);
+		
+		function g = new Polynom("1");
+		function h = new Polynom("x^2");
+		ComplexFunction f4 = new ComplexFunction(Operation.Times,g,h);
+		
+		assertEquals(f3.equals(f4),true);
+		
+		function i = new Polynom("x");
+		function j = new Polynom("x");
+		ComplexFunction f5 = new ComplexFunction(Operation.Plus,i,j);
+		
+		function k = new Polynom("1");
+		function l = new Polynom("x^2");
+		ComplexFunction f6 = new ComplexFunction(Operation.Times,k,l);
+		
+		assertEquals(f5.equals(f6),false);
+	}
+
+	
 }

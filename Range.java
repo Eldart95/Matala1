@@ -7,8 +7,18 @@ package Ex1;
 public class Range {
 	private double _min, _max;
 	public Range(double min, double max) {
+		if(min>max) throw new RuntimeException("Min is bigger than max");
 		set_min(min);
 		set_max(max);
+	}
+	
+	public Range(String min,String max) {
+		int mi = Integer.parseInt(min);
+		int ma = Integer.parseInt(max);
+		if(mi>ma) throw new RuntimeException("Min is bigger than max");
+		set_min(mi);
+		set_max(ma);
+		
 	}
 	public boolean isIn(double d) {
 		boolean inSide = false;

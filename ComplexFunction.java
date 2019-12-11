@@ -16,12 +16,20 @@ public class ComplexFunction implements complex_function {
 	public Operation Sign;
 	public function left,right;
 
+
 	LinkedList<ComplexFunction> func = new LinkedList<ComplexFunction>();
 	
 	//////////////////Constructors///////////////////
 	
+	public ComplexFunction(Operation s,function l,function r ) {
+		this.Sign=s;
+		if(l!=null) this.left=l;
+		if(r!=null) this.right=r;
+	}
+	
 	public ComplexFunction(String s) {
 		ComplexFunction x = (ComplexFunction) this.initFromString(s);
+		
 		this.Sign=x.Sign;
 		this.left=x.left;
 		this.right=x.right;
@@ -29,7 +37,9 @@ public class ComplexFunction implements complex_function {
 	}
 	
 	public ComplexFunction() {
-
+		this.left=null;
+		this.Sign=null;
+		this.right=null;
 	}
 	public ComplexFunction (function left) {
 		this.left = left;
@@ -105,7 +115,10 @@ public class ComplexFunction implements complex_function {
 	 */
 		
 	
-	public function initFromString(String s) { 
+	public function initFromString(String ns) { 
+		
+		String s =clearSpaces(ns);
+		
 		if(!s.contains("(") && !s.contains(")")) {
 			function p = new Polynom(s);
 			
@@ -126,6 +139,8 @@ public class ComplexFunction implements complex_function {
 		String b = s.substring(w+1,s.length()-1);           //and the right of a ComplexFunction.
 		function f2 = initFromString(b);
 		
+	
+	
 		String temp = temp1.toLowerCase();
 		switch(temp) {
 		case "plus": this.Sign=Operation.Plus; break;
@@ -144,23 +159,7 @@ public class ComplexFunction implements complex_function {
 		}
 		
 	}
-	
-	/**
-	 * 
-	 * The helper of the init method, cuts the string.
-	 */
-	private int split(String s) {
-		int q1=0,q2=0;
-		for (int i = 0; i < s.length(); i++) {
-			if(s.charAt(i)=='(') q1++;
-			if(s.charAt(i)==')') q1--;
-			if(s.charAt(i)==',' && q1==1) {
-				q2=i;
-			}
-		}
-		return q2;
-	}
-	
+
 	/**
 	 * returns a deep copy of a function
 	 */
@@ -179,31 +178,21 @@ public class ComplexFunction implements complex_function {
 	 */
 	public boolean equals(Object obj) {
 		boolean ans = false;
-		if(this instanceof ComplexFunction && obj instanceof ComplexFunction) {
-			int a = (int)(Math.random()+1)*100;
-			int b = (int)(Math.random()+1)*150;
-			int c = (int)(Math.random()+1)*200;
-			int d = (int)(Math.random()+1)*300;
-			
-			
-			if(((ComplexFunction)this).f(a)==((ComplexFunction)obj).f(a)) {
-					ans=true;
+		if(obj instanceof function) {
+			for (int z = 0; z < 10; z++) {
+				double dd = ((Math.random())*10000);
+						for (double i = dd; i < dd+2; i+=0.001) {
+							if(Math.abs(((ComplexFunction)this).f(dd)-((ComplexFunction)obj).f(dd))<0.001) {
+								ans=true;
+								}
+								else ans=false;
+								return ans;
+								}
+						}
+		
 			}
-			if(((ComplexFunction)this).f(b)==((ComplexFunction)obj).f(b)) {
-				ans=true;
-		}
-			if(((ComplexFunction)this).f(c)==((ComplexFunction)obj).f(c)) {
-				ans=true;
-		}
-			if(((ComplexFunction)this).f(d)==((ComplexFunction)obj).f(d)) {
-				ans=true;
-		}
-			return ans;
-			
-		}
 		
-		
-	return false;
+		return false;
 	}
 	
 	
@@ -333,4 +322,40 @@ public class ComplexFunction implements complex_function {
 		this.Sign=Operation.Comp;
 		
 	}
+	//////////////////Helpers///////////////////
+	
+	/**
+	 * 
+	 * The helper of the init method, cuts the string.
+	 */
+	private int split(String s) {
+		int q1=0,q2=0;
+		for (int i = 0; i < s.length(); i++) {
+			if(s.charAt(i)=='(') q1++;
+			if(s.charAt(i)==')') q1--;
+			if(s.charAt(i)==',' && q1==1) {
+				q2=i;
+			}
+		}
+		return q2;
+	}
+	/**
+	 * Space clearer.
+	 * if space (" ") is detected - than make it disapear.
+	 * 
+	 * @param s
+	 * @return string without spaces.
+	 */
+	
+	public String clearSpaces (String s) {
+		String t="";
+		for (int i=0; i<s.length(); i++) {
+			if (s.charAt(i)==' ') {
+				continue;
+				}
+			t=""+t+s.charAt(i);
+		}
+		return t;
+	}
+	
 }

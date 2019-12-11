@@ -1,10 +1,13 @@
 package Ex1;
+import java.io.FileNotFoundException;
 /**
  * This interface represents a collection of mathematical functions
  *  which can be presented on a GUI window and can be saved (and load) to file. 
  */
 import java.io.IOException;
 import java.util.Collection;
+
+import org.json.simple.parser.ParseException;
 
 public interface functions extends Collection<function>{
 	/**
@@ -33,6 +36,9 @@ public interface functions extends Collection<function>{
  * Draws all the functions in the collection in a GUI window using the given JSON file
  * @param json_file - the file with all the parameters for the GUI window. 
  * Note: is the file id not readable or in wrong format should use default values. 
+ * @throws ParseException 
+ * @throws IOException 
+ * @throws FileNotFoundException 
  */
-	public void drawFunctions(String json_file);
+	public void drawFunctions(String json_file) throws FileNotFoundException, IOException, ParseException;
 }
