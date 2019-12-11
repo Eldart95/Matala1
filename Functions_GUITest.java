@@ -52,7 +52,18 @@ class Functions_GUITest {
 		catch(Exception e) {e.printStackTrace();}
 		
 		String JSON_param_file = "GUI_params.txt";
-		data.drawFunctions(JSON_param_file);
+		try {
+			data.drawFunctions(JSON_param_file);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private functions _data=null;
 //	@BeforeAll
@@ -64,10 +75,6 @@ class Functions_GUITest {
 		_data = FunctionsFactory();
 	}
 
-	//@Test
-	void testFunctions_GUI() {
-	//	fail("Not yet implemented");
-	}
 
 //	@Test
 	void testInitFromFile() throws IOException {
