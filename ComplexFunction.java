@@ -57,6 +57,7 @@ public class ComplexFunction implements complex_function {
 		case "max": this.Sign=Operation.Max; break;
 		case "comp": this.Sign=Operation.Comp; break;
 		case "divid": this.Sign=Operation.Divid; break;
+		case "div": this.Sign=Operation.Divid; break;
 		case "mul": this.Sign=Operation.Times; break;
 		default: this.Sign=Operation.None;
 		}
@@ -122,9 +123,7 @@ public class ComplexFunction implements complex_function {
 		if(!s.contains("(") && !s.contains(")")) {
 			function p = new Polynom(s);
 			
-			
-			return p;
-			
+			return p;	
 		}
 		
 		else {
@@ -148,6 +147,7 @@ public class ComplexFunction implements complex_function {
 		case "max": this.Sign=Operation.Max; break;
 		case "comp": this.Sign=Operation.Comp; break;
 		case "divid": this.Sign=Operation.Divid; break;
+		case "div": this.Sign=Operation.Divid; break;
 		case "mul": this.Sign=Operation.Times; break;
 		default: this.Sign=Operation.None;
 		}
@@ -178,21 +178,18 @@ public class ComplexFunction implements complex_function {
 	 */
 	public boolean equals(Object obj) {
 		boolean ans = false;
-		if(obj instanceof function) {
-			for (int z = 0; z < 10; z++) {
-				double dd = ((Math.random())*10000);
-						for (double i = dd; i < dd+2; i+=0.001) {
-							if(Math.abs(((ComplexFunction)this).f(dd)-((ComplexFunction)obj).f(dd))<0.001) {
-								ans=true;
-								}
-								else ans=false;
-								return ans;
-								}
-						}
-		
+		function fobj = (function) obj;
+		double l,r;
+		double i;
+		for (i = Math.random()*100; i < 5000; i++) {
+			l=this.f(i);
+			r=fobj.f(i);
+			if(Math.abs(l-r)<0.0001) {
+				ans=true;
 			}
-		
-		return false;
+			
+		}
+		return ans;
 	}
 	
 	
@@ -254,7 +251,7 @@ public class ComplexFunction implements complex_function {
 	public String toString() {
 		String ans="";
 		if(this.Sign==Operation.None) {
-		ans+="";
+		ans+=this.left;
 		}
 		else ans+=this.Sign+"(";
 		
@@ -356,6 +353,14 @@ public class ComplexFunction implements complex_function {
 			t=""+t+s.charAt(i);
 		}
 		return t;
+	}
+	
+	public static void main(String[] args) {
+function a = new ComplexFunction();
+	
+function c = a.initFromString("Plus(-1.0x^4+2.4x^2+3.1,+1.1x^5-1.2999999999999998x+5.0)");;
+		System.out.println(c);
+	
 	}
 	
 }

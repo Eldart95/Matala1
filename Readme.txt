@@ -31,7 +31,6 @@ MUST-KNOW:
 -g is the Sign.
 -f1 is the left child.
 -f2 is the right child.
--if you wish to insert positive polynom/monom/number, inert it as you write it. without the "+" sign.
 ----------------------
 
 EXEPTIONS:

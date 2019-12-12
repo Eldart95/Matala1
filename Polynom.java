@@ -201,17 +201,25 @@ public class Polynom implements Polynom_able{
 	@Override
 	public boolean equals(Object p1) {
 		
-			String a = p1.toString();
-			Polynom_able z = new Polynom(a);
-			String y = this.toString();
-			Polynom x = new Polynom (y);
-			x.substract(z);
-			if(x.isZero()) return true;
-		
-			
-		
-		return false;
-		
+	       if(p1 instanceof Monom) {
+	            Polynom p2 = new Polynom();
+	            p2.add((Monom) p1);
+	            return this.equals(p2);
+	        }
+	        else if(p1 instanceof Polynom) {
+	            Polynom p2=(Polynom)p1;
+	            boolean isEquals = true;
+	            Iterator<Monom> it1 = this.iteretor();
+	            Iterator<Monom> it2 = p2.iteretor();
+	            while (it1.hasNext() && it2.hasNext()) {
+	                Monom a = it1.next();
+	                Monom b = it2.next();
+	                if (!a.equals(b)) isEquals = false;
+	            }
+	            if(it1.hasNext()||it2.hasNext()) isEquals = false;
+	            return isEquals;
+	        }
+	        return false;
 	}
 	/**
 	 * This method check if the polynom is a zero polynom

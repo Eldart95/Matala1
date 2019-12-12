@@ -14,7 +14,7 @@ class ComplexFunctionJTest {
 	 * Test for constructors and toString method.
 	 */
 
-//	@Test
+	@Test
 	void constructorsTest() {
 		function a = new Polynom("3x+2");
 		function b = new Polynom("4x^2");
@@ -41,14 +41,23 @@ class ComplexFunctionJTest {
 		
 		ComplexFunction f6 = new ComplexFunction("Plus(3x,3x)");
 		ComplexFunction f7 = new ComplexFunction("divid(3x^2,3x-2)");
-		ComplexFunction f8 = new ComplexFunction(Operation.Max,f1,f2);
-		ComplexFunction f9 = new ComplexFunction(Operation.Min,f3,f1);
+		ComplexFunction f8 = new ComplexFunction(Operation.Max,f6,f7);
+		
 		
 		assertEquals(f6.toString(),"Plus(3.0x,3.0x)");
 		assertEquals(f7.toString(),"Divid(3.0x^2,3.0x-2.0)");
 		assertEquals(f8.toString(),"Max(Plus(3.0x,3.0x),Divid(3.0x^2,3.0x-2.0))");
-		assertEquals(f9.toString(),"Min(Max(Plus(3.0x,3.0x),Divid(3.0x^2,3.0x-2.0)),Plus(3.0x,3.0x))");
 		
+		
+		ComplexFunction f10 = new ComplexFunction("comp(mul(plus(3x,3x),2x),plus(3x,3x))");
+		ComplexFunction f11 = new ComplexFunction("min(max(plus(3x,3x),2x),divid(3x,3x))");
+		ComplexFunction f12 = new ComplexFunction("plus(plus(3x,3x),plus(3x,3x))");
+		
+		
+		assertEquals(f10.toString(),"Comp(Times(Plus(3.0x,3.0x),2.0x),Plus(3.0x,3.0x))");
+		assertEquals(f11.toString(),"Min(Max(Plus(3.0x,3.0x),2.0x),Divid(3.0x,3.0x))");
+		assertEquals(f12.toString(),"Plus(Plus(3.0x,3.0x),Plus(3.0x,3.0x))");
+	
 	}
 	/**
 	 * test for all arithmetic methods, the methods implemented in exactly the same way
@@ -74,7 +83,7 @@ class ComplexFunctionJTest {
 		assertEquals(f3.toString(),"Divid(12.0x^2,12.0x^2)");
 	}
 	
-//	@Test
+	@Test
 	void fxTest() {
 		function a = new Polynom("3x");
 		function b = new Polynom("2x");
@@ -96,7 +105,7 @@ class ComplexFunctionJTest {
 		
 		
 	}
-//	@Test
+	@Test
 	void equalsTest() {
 		function a = new Polynom("3x+2");
 		function b = new Polynom("4x^2");
@@ -108,11 +117,11 @@ class ComplexFunctionJTest {
 		
 		assertEquals(f1.equals(f2),true);
 		
-		function e = new Polynom("x");
+		Polynom e = new Polynom("x");
 		function f = new Polynom("x");
 		ComplexFunction f3 = new ComplexFunction(Operation.Times,e,f);
 		
-		function g = new Polynom("1");
+		Monom g = new Monom("1");
 		function h = new Polynom("x^2");
 		ComplexFunction f4 = new ComplexFunction(Operation.Times,g,h);
 		
@@ -127,6 +136,21 @@ class ComplexFunctionJTest {
 		ComplexFunction f6 = new ComplexFunction(Operation.Times,k,l);
 		
 		assertEquals(f5.equals(f6),false);
+	}
+	
+	@Test
+	void initTest() {
+		function a = new ComplexFunction();
+	
+		
+		function b = a.initFromString("plus(plus(comp(3x,3x),2x),4x^2)");
+		function c = a.initFromString("plus(divid(5x^2+3,2x),mul(4x^4,x))");
+		function d = new ComplexFunction("max(2x,-2x)");
+		
+		assertEquals(b.toString(), "Plus(Plus(Comp(3.0x,3.0x),2.0x),4.0x^2)");
+		assertEquals(c.toString(), "Plus(Divid(5.0x^2+3.0,2.0x),Times(4.0x^4,1.0x))");
+		assertEquals(d.toString(), "Max(2.0x,-2.0x)");
+		
 	}
 
 	

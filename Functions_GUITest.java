@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -66,9 +67,9 @@ class Functions_GUITest {
 		}
 	}
 	private functions _data=null;
-//	@BeforeAll
-//	static void setUpBeforeClass() throws Exception {
-//	}
+	@BeforeAll
+	static void setUpBeforeClass() throws Exception {
+	}
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -76,7 +77,7 @@ class Functions_GUITest {
 	}
 
 
-//	@Test
+	@Test
 	void testInitFromFile() throws IOException {
 		
 		function t = new ComplexFunction();
@@ -84,6 +85,10 @@ class Functions_GUITest {
 				"Min(-1.0x^4+2.4x^2+3.1,5.0x^2+0.5)" , 
 				"Plus(Divid(2.0x,2.0x),3.0x)" ,
 				"Plus(Min(Comp(2.0x,3.0x^2),4.0x^4),3.0x^2)" ,
+				"Plus(3x,3x)",
+				"Plus(-1.0x^4+2.4x^2+3.1,+1.1x^5-1.2999999999999998x+5.0)",
+				"Divid(Plus(-1.0x^4+2.4x^2+3.1,+0.1x^5-1.2999999999999998x+5.0),-1.0x^4+2.4x^2+3.1)"
+				
 		};
 		
 		Functions_GUI FG = new Functions_GUI();
@@ -110,44 +115,10 @@ class Functions_GUITest {
 				}
 			}
 	}
-//	@Test
-	void testInitFromFileBuilder() throws IOException {
 
 	
-		ComplexFunction b = new ComplexFunction("max(2.0,plus(3.0x,2.0x))");
-	
-		Functions_GUI bf = new Functions_GUI();
-	
-		Functions_GUI n1 = new Functions_GUI();
-	
-		bf.add(b);
 
-		
-		try {
-			n1.initFromFile("C:\\Users\\Eldar\\eclipse-workspace1\\Matala0\\src\\Ex1\\n1.txt");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	
-
-
-		Iterator<function> k = bf.iterator();
-		Iterator<function> l = n1.iterator();
-
-		while (k.hasNext() && l.hasNext()) { 
-			function z2 =k.next(); 
-			function z3 =l.next();
-			if (!(z2.equals(z3))) { 
-				fail(); 
-				}
-			}
-	
-		
-	}
-	
-
-//	@Test
+	@Test
 	void testSaveToFile() {
 		
 		try {
@@ -157,7 +128,7 @@ class Functions_GUITest {
 		}
 	}
 
-//	@Test
+	@Test
 	void testDrawFunctions() {
 		Functions_GUI z = new Functions_GUI();
 		Polynom z1 = new Polynom("-x^2");
@@ -169,6 +140,15 @@ class Functions_GUITest {
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-10,10);
 		z.drawFunctions(700,700,rx,ry,500);
+		_data.drawFunctions(700,700,rx,ry,900);
+		Functions_GUI nf = new Functions_GUI();
+		try {
+			nf.initFromFile("C:\\Users\\Eldar\\eclipse-workspace1\\Matala0\\src\\Ex1\\initTest.txt");
+			nf.drawFunctions(700, 700, rx, ry, 700);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	//	fail("Not yet implemented");
 	}
 
@@ -189,13 +169,25 @@ class Functions_GUITest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Functions_GUI nf = new Functions_GUI();
+		try {
+			nf.initFromFile("C:\\Users\\Eldar\\eclipse-workspace1\\Matala0\\src\\Ex1\\initTest.txt");
+			nf.drawFunctions("C:\\Users\\Eldar\\eclipse-workspace1\\Matala0\\src\\Ex1Testing\\GUI_params.json");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//fail("Not yet implemented");
+		catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static functions FunctionsFactory() {
 		functions ans = new Functions_GUI();
-		String s1 = "3.1 +2.4x^2 -x^4";
-		String s2 = "5 +2x -3.3x +0.1x^5";
-		String[] s3 = {"x +3","x -2", "x -4"};
+		String s1 = "3.1+2.4x^2-x^4";
+		String s2 = "5+2x-3.3x+0.1x^5";
+		String[] s3 = {"x+3","x-2","x-4"};
 		Polynom p1 = new Polynom(s1);
 		Polynom p2 = new Polynom(s2);
 		Polynom p3 = new Polynom(s3[0]);
@@ -205,10 +197,11 @@ class Functions_GUITest {
 		}
 		
 		ComplexFunction cf = new ComplexFunction(Operation.Plus, p1,p2);
-		ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x +1"),cf3);
+		function cc = new Polynom("x+1");
+		ComplexFunction cf4 = new ComplexFunction("divid", cc ,cf3);
 		cf4.plus(new Monom("2"));
 		ans.add(cf.copy());
-		ans.add(cf4.copy());
+		//ans.add(cf4.copy());
 		cf.div(p1);
 		ans.add(cf.copy());
 		String s = cf.toString();

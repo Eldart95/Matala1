@@ -95,13 +95,15 @@ public class Monom implements function{
 		}
 		if(!s.contains("x")&&!s.contains("^")) {
 			String temp4=s.substring(0, s.length());
-			set_coefficient(Double.parseDouble(temp4));
+			if(temp4.isEmpty()) set_coefficient(0);
+			else set_coefficient(Double.parseDouble(temp4));
 			set_power(0);
 				
 			}
 		else if(!s.contains("^") && s.contains("x")) {
 			String temp2=s.substring(0, s.length()-1);
-			set_coefficient(Double.parseDouble(temp2));
+			if(temp2.isEmpty()) set_coefficient(0);
+			else set_coefficient(Double.parseDouble(temp2));
 			set_power(1);
 			
 		}
@@ -208,15 +210,23 @@ public class Monom implements function{
 	 * @return true if the Monoms are the same, false otherwise.
 	 */
 	public boolean equals(Object obj) {
-		//use iterator
-		// if obj instance of monom
-		
-		String temp1 = this.toString();
-		String temp2 = obj.toString();
-		if(temp1.equals(temp2)) {
-			return true;
-		}
-		else return false;
+
+        if(obj instanceof Monom)  {
+
+            double dc = this.get_coefficient() -((Monom) obj).get_coefficient();
+            if (Math.abs(dc) < EPSILON && this.get_power() == ((Monom) obj).get_power()) {
+            	return true;
+            }
+            return false;
+        }
+
+        else if (obj instanceof function) {
+            function f=(function) obj;
+            return f.equals(this);
+        }
+        else {
+            return false;
+        }
 	
 	}
 	
